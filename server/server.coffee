@@ -1,9 +1,9 @@
 if Meteor.isServer
 
 
-  Meteor.publish('roles',()->
+  Meteor.publish('roles',(uk)->
     this.ready()
-    roles.find()
+    roles.find({unikey:uk})
   )
   Meteor.publish('capabilities',()->
     this.ready()

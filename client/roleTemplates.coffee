@@ -27,6 +27,7 @@ if Meteor.isClient
       boxVals = _.map $('.capaInRole:checked'), (el) ->
           $(el).val()
       roles.update({_id:Session.get('currentRole')},{$set:{capabilities:boxVals}})
+      $('.show-roles').trigger('click')
 
 
 
@@ -34,14 +35,19 @@ if Meteor.isClient
 
 
   Template.roleList.rendered = ->
-    Meteor.subscribe('roles')
+
+    Session.set('acluniqkey',this.data.uniqKey)
+    Meteor.subscribe('roles',this.data.uniqKey)
     Meteor.subscribe('capabilities')
     $('.capability-list').hide()
 
   Template.newRoleForm.events
     'submit form':(e)->
-      roles.insert({rolename:$(e.currentTarget).find('#rolename').val(),roledesc:$(e.currentTarget).find('#roledesc').val()})
+      uk = Session.get('acluniqkey')
+      addRoles($(e.currentTarget).find('#rolename').val(),$(e.currentTarget).find('#roledesc').val(),[],uk)
+#      roles.insert({rolename:$(e.currentTarget).find('#rolename').val(),roledesc:$(e.currentTarget).find('#roledesc').val()})
       e.preventDefault()
+      $('.show-roles').trigger('click')
 
   Template.roleAssignment.helpers
     listOfUsers:()->
