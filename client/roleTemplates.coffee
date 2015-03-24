@@ -7,6 +7,9 @@ if Meteor.isClient
       roles.find().fetch()
     capabilityList:()->
       capabilities.find().fetch()
+    capabilityAdded:(code)->
+      if Session.get('currentRole')?
+        roles.findOne(Session.get('currentRole')).capabilities.indexOf(code) isnt -1
 
 
   Template.roleList.events

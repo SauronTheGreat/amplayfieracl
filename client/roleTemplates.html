@@ -3,14 +3,19 @@
 <template name="roleList">
     <ul id="tag-list" class="full-box role-list">
     {{#each listOfRoles}}
-            <li>{{rolename}} <a href="#" class="manage-role btn btn-warning btn-xs pull-right list-btn" >Manage</a><a href="#" class="delete-role btn btn-warning btn-xs pull-right list-btn" >Delete</a></li>
+            <li>{{rolename}} <a href="#" class="manage-role btn btn-warning btn-xs pull-right list-btn" >Manage</a><a href="#" class="delete-role btn btn-danger btn-xs pull-right list-btn" >Delete</a></li>
 
         {{/each}}
 
     </ul>
     <ul id="tag-list" class="full-box capability-list">
         {{#each capabilityList}}
-            <li><input type="checkbox" name="capa"  value="{{code}}" style='width:10%' class="capability-name capaInRole">{{name}}</li>
+            {{#if capabilityAdded code}}
+                <li><input type="checkbox" name="capa" checked  value="{{code}}" style='width:10%' class="capability-name capaInRole">{{name}}</li>
+                {{else}}
+                <li><input type="checkbox" name="capa"  value="{{code}}" style='width:10%' class="capability-name capaInRole">{{name}}</li>
+                {{/if}}
+
 
         {{/each}}
 
